@@ -170,4 +170,7 @@ void processFile(File file) {
     print('✅ Updated: ${file.path}');
     file.writeAsStringSync(updatedContent);
   }
+  else{
+    print("Nothing found");
+  }
 }
