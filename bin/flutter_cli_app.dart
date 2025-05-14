@@ -109,7 +109,10 @@
 //   }
 //   print('Result: $result');
 // }
-import 'dart:io';
+
+//-------------------------------------------------------
+
+/*import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -142,5 +145,28 @@ void main(List<String> arguments) async {
     }
   } catch (e) {
     print('⚠️ An error occurred: $e');
+  }
+}
+*/
+import 'dart:io';
+
+void main() {
+  final dir = Directory('lib');
+  final files = dir.listSync(recursive: true, followLinks: false);
+
+  for (final entity in files) {
+    if (entity is File && entity.path.endsWith('.dart')) {
+      processFile(entity);
+    }
+  }
+}
+
+void processFile(File file) {
+  final content = file.readAsStringSync();
+  final updatedContent = content.replaceAll("Text('Refresh')", "Text('Yangilash')");
+
+  if (content != updatedContent) {
+    print('✅ Updated: ${file.path}');
+    file.writeAsStringSync(updatedContent);
   }
 }
