@@ -155,6 +155,7 @@ void main() {
   final files = dir.listSync(recursive: true, followLinks: false);
 
   for (final entity in files) {
+    print(entity);
     if (entity is File && entity.path.endsWith('.dart')) {
       processFile(entity);
     }
