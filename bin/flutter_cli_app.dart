@@ -112,7 +112,7 @@
 
 //-------------------------------------------------------
 
-/*import 'dart:io';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -147,66 +147,65 @@ void main(List<String> arguments) async {
     print('⚠️ An error occurred: $e');
   }
 }
-*/
-import 'dart:io';
-import 'package:path/path.dart' as path;
-
-// Regular expression to match Text widgets with "Refresh" as content
-final RegExp textRefreshRegex = RegExp(
-  r'''Text\s*\(\s*(['"])Refresh\1\s*(?:,|\))''',
-  multiLine: true,
-);
-
-void main() {
-  final dir = Directory('lib');
-  if (!dir.existsSync()) {
-    print('Error: lib directory not found. Make sure you are running this script from your Flutter project root.');
-    return;
-  }
-
-  final files = dir.listSync(recursive: true, followLinks: false);
-  int updatedFiles = 0;
-
-  print('Searching for Text widgets with "Refresh" value...');
-
-  for (final entity in files) {
-    if (entity is File && entity.path.endsWith('.dart')) {
-      final bool wasUpdated = processFile(entity);
-      if (wasUpdated) updatedFiles++;
-    }
-  }
-
-  print('\nSummary:');
-  print('$updatedFiles files were updated.');
-}
-
-bool processFile(File file) {
-  try {
-    final content = file.readAsStringSync();
-    final matches = textRefreshRegex.allMatches(content);
-
-    if (matches.isEmpty) {
-      return false;
-    }
-
-    String updatedContent = content;
-    for (final match in matches) {
-      final String matchedText = match.group(0)!;
-      final String replacementText = matchedText.replaceFirst('Refresh', 'Yangilash');
-      updatedContent = updatedContent.replaceAll(matchedText, replacementText);
-    }
-
-    if (content != updatedContent) {
-      print('✅ Updated: ${file.path}');
-      print('   Found ${matches.length} occurrences of "Refresh"');
-      file.writeAsStringSync(updatedContent);
-      return true;
-    }
-
-    return false;
-  } catch (e) {
-    print('❌ Error processing file: ${file.path}');
-    print('   $e');
-    return false;
-  }
-}
+// import 'dart:io';
+// import 'package:path/path.dart' as path;
+//
+// // Regular expression to match Text widgets with "Refresh" as content
+// final RegExp textRefreshRegex = RegExp(
+//   r'''Text\s*\(\s*(['"])Refresh\1\s*(?:,|\))''',
+//   multiLine: true,
+// );
+//
+// void main() {
+//   final dir = Directory('lib');
+//   if (!dir.existsSync()) {
+//     print('Error: lib directory not found. Make sure you are running this script from your Flutter project root.');
+//     return;
+//   }
+//
+//   final files = dir.listSync(recursive: true, followLinks: false);
+//   int updatedFiles = 0;
+//
+//   print('Searching for Text widgets with "Refresh" value...');
+//
+//   for (final entity in files) {
+//     if (entity is File && entity.path.endsWith('.dart')) {
+//       final bool wasUpdated = processFile(entity);
+//       if (wasUpdated) updatedFiles++;
+//     }
+//   }
+//
+//   print('\nSummary:');
+//   print('$updatedFiles files were updated.');
+// }
+//
+// bool processFile(File file) {
+//   try {
+//     final content = file.readAsStringSync();
+//     final matches = textRefreshRegex.allMatches(content);
+//
+//     if (matches.isEmpty) {
+//       return false;
+//     }
+//
+//     String updatedContent = content;
+//     for (final match in matches) {
+//       final String matchedText = match.group(0)!;
+//       final String replacementText = matchedText.replaceFirst('Refresh', 'Yangilash');
+//       updatedContent = updatedContent.replaceAll(matchedText, replacementText);
+//     }
+//
+//     if (content != updatedContent) {
+//       print('✅ Updated: ${file.path}');
+//       print('   Found ${matches.length} occurrences of "Refresh"');
+//       file.writeAsStringSync(updatedContent);
+//       return true;
+//     }
+//
+//     return false;
+//   } catch (e) {
+//     print('❌ Error processing file: ${file.path}');
+//     print('   $e');
+//     return false;
+//   }
+// }
